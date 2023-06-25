@@ -1,0 +1,75 @@
+{
+  "name": "undangon-server",
+  "description": "",
+  "version": "0.0.0",
+  "homepage": "",
+  "private": true,
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Imanuel Pundoko",
+    "email": "ilomon10@gmail.com"
+  },
+  "contributors": [],
+  "bugs": {},
+  "engines": {
+    "node": ">= 14.21.1"
+  },
+  "feathers": {
+    "language": "js",
+    "packager": "npm",
+    "database": "mysql",
+    "framework": "koa",
+    "transports": [
+      "rest",
+      "websockets"
+    ],
+    "schema": "typebox"
+  },
+  "directories": {
+    "lib": "src",
+    "test": "test"
+  },
+  "main": "lib/index",
+  "type": "module",
+  "scripts": {
+    "start": "node src",
+    "dev": "nodemon --ignore ./migrate/ --ignore ./public/ src/",
+    "prettier": "npx prettier \"**/*.js\" --write",
+    "mocha": "cross-env NODE_ENV=test mocha test/ --recursive --exit",
+    "test": "cross-env NODE_ENV=test npm run migrate && npm run mocha",
+    "bundle:client": "npm pack --pack-destination ./public",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "migrate:make": "knex migrate:make"
+  },
+  "dependencies": {
+    "@feathersjs/adapter-commons": "^5.0.5",
+    "@feathersjs/authentication": "^5.0.5",
+    "@feathersjs/authentication-client": "^5.0.5",
+    "@feathersjs/authentication-local": "^5.0.6",
+    "@feathersjs/authentication-oauth": "^5.0.6",
+    "@feathersjs/configuration": "^5.0.5",
+    "@feathersjs/errors": "^5.0.5",
+    "@feathersjs/feathers": "^5.0.5",
+    "@feathersjs/knex": "^5.0.5",
+    "@feathersjs/koa": "^5.0.5",
+    "@feathersjs/schema": "^5.0.5",
+    "@feathersjs/socketio": "^5.0.5",
+    "@feathersjs/transport-commons": "^5.0.5",
+    "@feathersjs/typebox": "^5.0.5",
+    "knex": "^2.4.2",
+    "mysql": "^2.18.1",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@feathersjs/cli": "^5.0.5",
+    "@feathersjs/rest-client": "^5.0.5",
+    "axios": "^1.4.0",
+    "cross-env": "^7.0.3",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
+  }
+}

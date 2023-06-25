@@ -1,0 +1,6 @@
+{
+  "mysql": {
+    "client": "mysql",
+    "connection": "mysql://u1577819_admin:ilomon0123@109.106.252.163:3306/u1577819_undangon_server"
+  }
+}
