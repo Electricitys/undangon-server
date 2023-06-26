@@ -35,14 +35,16 @@
   "type": "module",
   "scripts": {
     "start": "node src",
-    "dev": "nodemon --ignore ./migrate/ --ignore ./public/ src/",
+    "dev": "nodemon --ignore ./migrations/ --ignore ./public/ --ignore ./seeds/ src/",
     "prettier": "npx prettier \"**/*.js\" --write",
     "mocha": "cross-env NODE_ENV=test mocha test/ --recursive --exit",
     "test": "cross-env NODE_ENV=test npm run migrate && npm run mocha",
     "bundle:client": "npm pack --pack-destination ./public",
     "migrate": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
-    "migrate:make": "knex migrate:make"
+    "migrate:make": "knex migrate:make",
+    "seed:make": "knex seed:make",
+    "seed:run": "knex seed:run"
   },
   "dependencies": {
     "@feathersjs/adapter-commons": "^5.0.5",

@@ -1,9 +1,10 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
-import { resolve, virtual } from '@feathersjs/schema'
-import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
-import { dataValidator, queryValidator } from '../../validators.js'
-import { categoriesSchema } from '../categories/categories.schema.js'
-import { userSchema } from '../users/users.schema.js'
+import { resolve, virtual } from '@feathersjs/schema';
+import { Type, getValidator, querySyntax } from '@feathersjs/typebox';
+import { dataValidator, queryValidator } from '../../validators.js';
+import { categoriesSchema } from '../categories/categories.schema.js';
+import { userSchema } from '../users/users.schema.js';
+import { packagesSchema } from '../packages/packages.schema.js';
 
 // Main data model schema
 export const invitationsSchema = Type.Object(
@@ -19,24 +20,29 @@ export const invitationsSchema = Type.Object(
     user_id: Type.Number(),
     user: Type.Ref(userSchema),
 
+    package_id: Type.Number(),
+    package: Type.Ref(packagesSchema),
+
     created_at: Type.Number(),
     updated_at: Type.Number()
   },
   { $id: 'Invitations', additionalProperties: false }
-)
-export const invitationsValidator = getValidator(invitationsSchema, dataValidator)
+);
+export const invitationsValidator = getValidator(invitationsSchema, dataValidator);
 export const invitationsResolver = resolve({
   user: virtual(async (invitation, context) => {
     // Associate the user that sent the message
-    return context.app.service('users').get(invitation.user_id)
+    return context.app.service('users').get(invitation.user_id);
   }),
-  categories: virtual(async (invitation, context) => {
-    // Associate the user that sent the message
-    return context.app.service('cateogories').get(invitation.category_id)
+  category: virtual(async (invitation, context) => {
+    return context.app.service('categories').get(invitation.category_id);
+  }),
+  package: virtual(async (invitation, context) => {
+    return context.app.service('packages').get(invitation.package_id);
   })
-})
+});
 
-export const invitationsExternalResolver = resolve({})
+export const invitationsExternalResolver = resolve({});
 
 // Schema for creating new entries
 export const invitationsDataSchema = Type.Pick(
@@ -45,20 +51,20 @@ export const invitationsDataSchema = Type.Pick(
   {
     $id: 'InvitationsData'
   }
-)
-export const invitationsDataValidator = getValidator(invitationsDataSchema, dataValidator)
+);
+export const invitationsDataValidator = getValidator(invitationsDataSchema, dataValidator);
 export const invitationsDataResolver = resolve({
   user_id: async (_value, _invitation, context) => {
-    return context.params.user.id
+    return context.params.user.id;
   }
-})
+});
 
 // Schema for updating existing entries
 export const invitationsPatchSchema = Type.Partial(invitationsSchema, {
   $id: 'InvitationsPatch'
-})
-export const invitationsPatchValidator = getValidator(invitationsPatchSchema, dataValidator)
-export const invitationsPatchResolver = resolve({})
+});
+export const invitationsPatchValidator = getValidator(invitationsPatchSchema, dataValidator);
+export const invitationsPatchResolver = resolve({});
 
 // Schema for allowed query properties
 export const invitationsQueryProperties = Type.Pick(invitationsSchema, [
@@ -70,7 +76,7 @@ export const invitationsQueryProperties = Type.Pick(invitationsSchema, [
   'user_id',
   'created_at',
   'updated_at'
-])
+]);
 export const invitationsQuerySchema = Type.Intersect(
   [
     querySyntax(invitationsQueryProperties),
@@ -78,6 +84,6 @@ export const invitationsQuerySchema = Type.Intersect(
     Type.Object({}, { additionalProperties: false })
   ],
   { additionalProperties: false }
-)
-export const invitationsQueryValidator = getValidator(invitationsQuerySchema, queryValidator)
-export const invitationsQueryResolver = resolve({})
+);
+export const invitationsQueryValidator = getValidator(invitationsQuerySchema, queryValidator);
+export const invitationsQueryResolver = resolve({});
