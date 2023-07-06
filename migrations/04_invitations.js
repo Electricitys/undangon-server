@@ -9,7 +9,7 @@ export async function up(knex) {
     table.increments('id');
     table.string('name');
     table.text('content', 'longtext');
-    table.string('slug').unique();
+    table.string('slug').unique().notNullable();
 
     table
       .integer('user_id')

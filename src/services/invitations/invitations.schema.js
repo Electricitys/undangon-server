@@ -47,7 +47,7 @@ export const invitationsExternalResolver = resolve({});
 // Schema for creating new entries
 export const invitationsDataSchema = Type.Pick(
   invitationsSchema,
-  ['name', 'content', 'slug', 'category_id'],
+  ['name', 'content', 'slug', 'category_id', 'package_id'],
   {
     $id: 'InvitationsData'
   }

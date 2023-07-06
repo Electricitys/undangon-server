@@ -1,23 +1,31 @@
-import { packages } from './packages/packages.js'
+import { sharingPartyEmailAddress } from './sharing_party_email_address/sharing_party_email_address.js';
 
-import { invitations } from './invitations/invitations.js'
+import { sharingParty } from './sharing_parties/sharing_parties.js';
 
-import { categories } from './categories/categories.js'
+import { packages } from './packages/packages.js';
 
-import { templates } from './templates/templates.js'
+import { invitations } from './invitations/invitations.js';
 
-import { user } from './users/users.js'
+import { categories } from './categories/categories.js';
+
+import { templates } from './templates/templates.js';
+
+import { user } from './users/users.js';
 
 export const services = (app) => {
-  app.configure(packages)
+  app.configure(sharingPartyEmailAddress);
 
-  app.configure(invitations)
+  app.configure(sharingParty);
 
-  app.configure(categories)
+  app.configure(packages);
 
-  app.configure(templates)
+  app.configure(invitations);
 
-  app.configure(user)
+  app.configure(categories);
+
+  app.configure(templates);
+
+  app.configure(user);
 
   // All services will be registered here
-}
+};
