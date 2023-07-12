@@ -2,7 +2,7 @@
 import { resolve, virtual } from '@feathersjs/schema';
 import { Type, getValidator, querySyntax } from '@feathersjs/typebox';
 import { dataValidator, queryValidator } from '../../validators.js';
-import { userSchema } from '../users/users.schema.js';
+import { USER_ROLES, userSchema } from '../users/users.schema.js';
 import { categoriesSchema } from '../categories/categories.schema.js';
 
 // Main data model schema
@@ -73,4 +73,14 @@ export const templatesQuerySchema = Type.Intersect(
   { additionalProperties: false }
 );
 export const templatesQueryValidator = getValidator(templatesQuerySchema, queryValidator);
-export const templatesQueryResolver = resolve({});
+export const templatesQueryResolver = resolve({
+  user_id: async (value, _query, context) => {
+    const user = context.params.user;
+    if (user) {
+      if (user.role === USER_ROLES.ADMIN) return undefined;
+      return user.id;
+    }
+
+    return value;
+  }
+});
