@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from '@feathersjs/authentication'
+import { authenticate } from '@feathersjs/authentication';
 
-import { hooks as schemaHooks } from '@feathersjs/schema'
+import { hooks as schemaHooks } from '@feathersjs/schema';
 import {
   templatesDataValidator,
   templatesPatchValidator,
@@ -11,14 +11,15 @@ import {
   templatesDataResolver,
   templatesPatchResolver,
   templatesQueryResolver
-} from './templates.schema.js'
-import { TemplatesService, getOptions } from './templates.class.js'
+} from './templates.schema.js';
+import { TemplatesService, getOptions } from './templates.class.js';
+import { allowAnonymous } from '../../hooks/allow-anonymous.js';
 
-export const templatesPath = 'templates'
-export const templatesMethods = ['find', 'get', 'create', 'patch', 'remove']
+export const templatesPath = 'templates';
+export const templatesMethods = ['find', 'get', 'create', 'patch', 'remove'];
 
-export * from './templates.class.js'
-export * from './templates.schema.js'
+export * from './templates.class.js';
+export * from './templates.schema.js';
 
 // A configure function that registers the service and its hooks via `app.configure`
 export const templates = (app) => {
@@ -28,15 +29,19 @@ export const templates = (app) => {
     methods: templatesMethods,
     // You can add additional custom events to be sent to clients here
     events: []
-  })
+  });
   // Initialize hooks
   app.service(templatesPath).hooks({
     around: {
       all: [
-        authenticate('jwt'),
         schemaHooks.resolveExternal(templatesExternalResolver),
         schemaHooks.resolveResult(templatesResolver)
-      ]
+      ],
+      find: [allowAnonymous, authenticate('jwt', 'anonymous')],
+      get: [allowAnonymous, authenticate('jwt', 'anonymous')],
+      create: [authenticate('jwt')],
+      patch: [authenticate('jwt')],
+      remove: [authenticate('jwt')]
     },
     before: {
       all: [
@@ -61,5 +66,5 @@ export const templates = (app) => {
     error: {
       all: []
     }
-  })
-}
+  });
+};

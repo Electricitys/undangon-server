@@ -5,6 +5,7 @@ import { dataValidator, queryValidator } from '../../validators.js';
 import { categoriesSchema } from '../categories/categories.schema.js';
 import { USER_ROLES, userSchema } from '../users/users.schema.js';
 import { packagesSchema } from '../packages/packages.schema.js';
+import { JWTStrategy } from '@feathersjs/authentication';
 
 // Main data model schema
 export const invitationsSchema = Type.Object(
