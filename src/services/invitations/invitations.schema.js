@@ -6,6 +6,7 @@ import { categoriesSchema } from '../categories/categories.schema.js';
 import { USER_ROLES, userSchema } from '../users/users.schema.js';
 import { packagesSchema } from '../packages/packages.schema.js';
 import { JWTStrategy } from '@feathersjs/authentication';
+import { metadataSchema } from '../metadata/metadata.schema.js';
 
 // Main data model schema
 export const invitationsSchema = Type.Object(
@@ -20,6 +21,9 @@ export const invitationsSchema = Type.Object(
 
     user_id: Type.Number(),
     user: Type.Ref(userSchema),
+
+    metadata_id: Type.Number(),
+    metadata: Type.Ref(metadataSchema),
 
     package_id: Type.Number(),
     package: Type.Ref(packagesSchema),
@@ -48,7 +52,7 @@ export const invitationsExternalResolver = resolve({});
 // Schema for creating new entries
 export const invitationsDataSchema = Type.Pick(
   invitationsSchema,
-  ['name', 'content', 'slug', 'category_id', 'package_id'],
+  ['name', 'content', 'slug', 'metadata_id', 'category_id', 'package_id'],
   {
     $id: 'InvitationsData'
   }
@@ -74,6 +78,7 @@ export const invitationsQueryProperties = Type.Pick(invitationsSchema, [
   'content',
   'slug',
   'category_id',
+  'metadata_id',
   'user_id',
   'created_at',
   'updated_at'
