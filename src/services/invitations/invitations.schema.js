@@ -91,7 +91,7 @@ export const invitationsQueryResolver = resolve({
   user_id: async (value, _query, context) => {
     const user = context.params.user;
     if (user) {
-      if (user.role === USER_ROLES.ADMIN) return undefined;
+      if ([USER_ROLES.ADMIN, USER_ROLES.MAINTAINER].indexOf(user.role)) return undefined;
       return user.id;
     }
 

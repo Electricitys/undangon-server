@@ -62,7 +62,7 @@ export const userQueryResolver = resolve({
   // If there is a user (e.g. with authentication), they are only allowed to see their own data
   id: async (value, _query, context) => {
     if (context.params.user) {
-      if (context.params.user.role === USER_ROLES.ADMIN) return undefined;
+      if ([USER_ROLES.ADMIN, USER_ROLES.MAINTAINER].indexOf(context.params.user.role)) return undefined;
       return context.params.user.id;
     }
 
