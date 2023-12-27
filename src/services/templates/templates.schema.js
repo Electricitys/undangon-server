@@ -4,6 +4,7 @@ import { Type, getValidator, querySyntax } from '@feathersjs/typebox';
 import { dataValidator, queryValidator } from '../../validators.js';
 import { USER_ROLES, userSchema } from '../users/users.schema.js';
 import { categoriesSchema } from '../categories/categories.schema.js';
+import { metadataSchema } from '../metadata/metadata.schema.js';
 
 // Main data model schema
 export const templatesSchema = Type.Object(
@@ -17,6 +18,9 @@ export const templatesSchema = Type.Object(
     category: Type.Ref(categoriesSchema),
     user_id: Type.Number(),
     user: Type.Ref(userSchema),
+
+    metadata_id: Type.Number(),
+    metadata: Type.Ref(metadataSchema),
 
     created_at: Type.Number(),
     updated_at: Type.Number()
@@ -38,7 +42,7 @@ export const templatesResolver = resolve({
 export const templatesExternalResolver = resolve({});
 
 // Schema for creating new entries
-export const templatesDataSchema = Type.Pick(templatesSchema, ['name', 'category_id'], {
+export const templatesDataSchema = Type.Pick(templatesSchema, ['name', 'category_id', 'metadata_id'], {
   $id: 'TemplatesData'
 });
 export const templatesDataValidator = getValidator(templatesDataSchema, dataValidator);
@@ -61,6 +65,7 @@ export const templatesQueryProperties = Type.Pick(templatesSchema, [
   'name',
   'user_id',
   'category_id',
+  'metadata_id',
   'created_at',
   'updated_at'
 ]);
@@ -77,7 +82,7 @@ export const templatesQueryResolver = resolve({
   user_id: async (value, _query, context) => {
     const user = context.params.user;
     if (user) {
-      if ([USER_ROLES.ADMIN, USER_ROLES.MAINTAINER].indexOf(user.role)) return undefined;
+      if ([USER_ROLES.ADMIN, USER_ROLES.MAINTAINER].indexOf(user.role) > -1) return undefined;
       return user.id;
     }
 
