@@ -75,6 +75,7 @@ export const templatesPatchResolver = resolve({});
 export const templatesQueryProperties = Type.Pick(templatesSchema, [
   'id',
   'name',
+  'content',
   'user_id',
   'category_id',
   'metadata_id',
