@@ -16,6 +16,8 @@ export const invitationsSchema = Type.Object(
     content: Type.String(),
     slug: Type.String(),
 
+    share_message: Type.String(),
+
     category_id: Type.Number(),
     category: Type.Ref(categoriesSchema),
 
@@ -52,7 +54,7 @@ export const invitationsExternalResolver = resolve({});
 // Schema for creating new entries
 export const invitationsDataSchema = Type.Pick(
   invitationsSchema,
-  ['name', 'content', 'slug', 'metadata_id', 'category_id', 'package_id'],
+  ['name', 'content', 'slug', 'share_message', 'metadata_id', 'category_id', 'package_id'],
   {
     $id: 'InvitationsData'
   }
@@ -77,6 +79,7 @@ export const invitationsQueryProperties = Type.Pick(invitationsSchema, [
   'name',
   'content',
   'slug',
+  'share_message',
   'category_id',
   'metadata_id',
   'user_id',

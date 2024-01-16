@@ -36,19 +36,31 @@ export const templatesResolver = resolve({
   category: virtual(async (template, context) => {
     // Associate the category that sent the message
     return context.app.service('categories').get(template.category_id);
+  }),
+  metadata: virtual(async (template, context) => {
+    // Associate the metadata that sent the message
+    if (!template.metadata_id) return undefined;
+    return context.app.service('metadata').get(template.metadata_id);
   })
 });
 
 export const templatesExternalResolver = resolve({});
 
 // Schema for creating new entries
-export const templatesDataSchema = Type.Pick(templatesSchema, ['name', 'category_id', 'metadata_id'], {
+export const templatesDataSchema = Type.Pick(templatesSchema, ['name', 'category_id'], {
   $id: 'TemplatesData'
 });
 export const templatesDataValidator = getValidator(templatesDataSchema, dataValidator);
 export const templatesDataResolver = resolve({
   user_id: async (_value, _template, context) => {
     return context.params.user.id;
+  },
+  metadata_id: async (value, template, context) => {
+    if (value) return value;
+    const metadata = await context.app.service('metadata').create({
+      title: template.name
+    });
+    return metadata.id;
   }
 });
 
