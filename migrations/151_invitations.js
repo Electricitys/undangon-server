@@ -10,8 +10,8 @@ export async function up(knex) {
     table.string('name');
     table.text('content', 'longtext');
     table.string('slug').unique().notNullable();
-    
-    table.string('share_message');
+
+    table.string('share_message').nullable();
 
     table
       .integer('user_id')

@@ -10,7 +10,8 @@ import {
   templatesExternalResolver,
   templatesDataResolver,
   templatesPatchResolver,
-  templatesQueryResolver
+  templatesQueryResolver,
+  tempaltesRemoveResolver
 } from './templates.schema.js';
 import { TemplatesService, getOptions } from './templates.class.js';
 import { allowAnonymous } from '../../hooks/allow-anonymous.js';
@@ -58,7 +59,7 @@ export const templates = (app) => {
         schemaHooks.validateData(templatesPatchValidator),
         schemaHooks.resolveData(templatesPatchResolver)
       ],
-      remove: []
+      remove: [tempaltesRemoveResolver]
     },
     after: {
       all: []

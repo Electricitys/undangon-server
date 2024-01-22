@@ -11,7 +11,8 @@ import {
   invitationsExternalResolver,
   invitationsDataResolver,
   invitationsPatchResolver,
-  invitationsQueryResolver
+  invitationsQueryResolver,
+  invitationsRemoveResolver
 } from './invitations.schema.js';
 import { InvitationsService, getOptions } from './invitations.class.js';
 import { allowAnonymous } from '../../hooks/allow-anonymous.js';
@@ -38,14 +39,8 @@ export const invitations = (app) => {
         schemaHooks.resolveExternal(invitationsExternalResolver),
         schemaHooks.resolveResult(invitationsResolver)
       ],
-      find: [
-        allowAnonymous,
-        authenticate('jwt', 'anonymous')
-      ],
-      get: [
-        allowAnonymous,
-        authenticate('jwt', 'anonymous')
-      ],
+      find: [allowAnonymous, authenticate('jwt', 'anonymous')],
+      get: [allowAnonymous, authenticate('jwt', 'anonymous')],
       create: [authenticate('jwt')],
       patch: [authenticate('jwt')],
       remove: [authenticate('jwt')]
@@ -65,7 +60,7 @@ export const invitations = (app) => {
         schemaHooks.validateData(invitationsPatchValidator),
         schemaHooks.resolveData(invitationsPatchResolver)
       ],
-      remove: []
+      remove: [invitationsRemoveResolver]
     },
     after: {
       all: []

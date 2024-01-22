@@ -54,7 +54,7 @@ export const invitationsExternalResolver = resolve({});
 // Schema for creating new entries
 export const invitationsDataSchema = Type.Pick(
   invitationsSchema,
-  ['name', 'content', 'slug', 'share_message', 'metadata_id', 'category_id', 'package_id'],
+  ['name', 'content', 'slug', 'category_id', 'package_id'],
   {
     $id: 'InvitationsData'
   }
@@ -63,6 +63,13 @@ export const invitationsDataValidator = getValidator(invitationsDataSchema, data
 export const invitationsDataResolver = resolve({
   user_id: async (_value, _invitation, context) => {
     return context.params.user.id;
+  },
+  metadata_id: async (value, invitation, context) => {
+    if (value) return value;
+    const metadata = await context.app.service('metadata').create({
+      title: invitation.name
+    });
+    return metadata.id;
   }
 });
 
@@ -106,3 +113,10 @@ export const invitationsQueryResolver = resolve({
     return value;
   }
 });
+
+export const invitationsRemoveResolver = async (context, next) => {
+  const invitation = await context.service.get(context.id);
+  await context.app.service('metadata').remove(invitation.metadata_id);
+
+  await next();
+};

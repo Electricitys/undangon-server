@@ -102,3 +102,10 @@ export const templatesQueryResolver = resolve({
     return value;
   }
 });
+
+export const tempaltesRemoveResolver = async (context, next) => {
+  const template = await context.service.get(context.id);
+  await context.app.service('metadata').remove(template.metadata_id);
+
+  await next();
+};
