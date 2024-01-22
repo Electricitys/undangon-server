@@ -1,3 +1,5 @@
+import { presetType } from './preset_types/preset_types.js';
+
 import { metadata } from './metadata/metadata.js';
 
 import { presets } from './presets/presets.js';
@@ -17,6 +19,8 @@ import { templates } from './templates/templates.js';
 import { user } from './users/users.js';
 
 export const services = (app) => {
+  app.configure(presetType);
+
   app.configure(metadata);
 
   app.configure(presets);

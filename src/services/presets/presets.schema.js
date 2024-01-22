@@ -3,13 +3,18 @@ import { resolve, virtual } from '@feathersjs/schema';
 import { Type, getValidator, querySyntax } from '@feathersjs/typebox';
 import { dataValidator, queryValidator } from '../../validators.js';
 import { userSchema } from '../users/users.schema.js';
+import { presetTypeDataSchema } from '../preset_types/preset_types.schema.js';
 
 // Main data model schema
 export const presetsSchema = Type.Object(
   {
     id: Type.Number(),
+    label: Type.String(),
     content: Type.String(),
     thumbnail: Type.String(),
+
+    type_id: Type.Number(),
+    type: Type.Ref(presetTypeDataSchema),
 
     user_id: Type.Number(),
     user: Type.Ref(userSchema),
@@ -24,13 +29,16 @@ export const presetsResolver = resolve({
   user: virtual(async (preset, context) => {
     // Associate the user that sent the message
     return context.app.service('users').get(preset.user_id);
+  }),
+  type: virtual(async (preset, context) => {
+    return context.app.service('preset_types').get(preset.type_id);
   })
 });
 
 export const presetsExternalResolver = resolve({});
 
 // Schema for creating new entries
-export const presetsDataSchema = Type.Pick(presetsSchema, ['content', 'thumbnail', 'user_id'], {
+export const presetsDataSchema = Type.Pick(presetsSchema, ['content', 'thumbnail', 'user_id', 'type_id'], {
   $id: 'PresetsData'
 });
 export const presetsDataValidator = getValidator(presetsDataSchema, dataValidator);
@@ -53,6 +61,7 @@ export const presetsQueryProperties = Type.Pick(presetsSchema, [
   'content',
   'thumbnail',
   'user_id',
+  'type_id',
   'created_at',
   'updated_at'
 ]);

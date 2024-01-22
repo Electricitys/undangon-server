@@ -7,8 +7,18 @@ import { knexHelper } from '../knexHelper.js';
 export async function up(knex) {
   await knex.schema.createTable('presets', (table) => {
     table.increments('id');
+    table.string('label').nullable();
     table.string('content', 'longtext');
-    table.string('thumbnail', 'longtext');
+    table.string('thumbnail', 'longtext').nullable();
+
+    table
+      .integer('type_id')
+      .unsigned()
+      .references('id')
+      .inTable('preset_types')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
+      .nullable();
 
     table
       .integer('user_id')
