@@ -10,6 +10,7 @@ export async function up(knex) {
     table.string('name');
     table.text('content', 'longtext');
     table.string('slug').unique().notNullable();
+    table.string('thumbnail_url').nullable();
 
     table.string('share_message').nullable();
 

@@ -18,6 +18,8 @@ export const invitationsSchema = Type.Object(
 
     share_message: Type.String(),
 
+    thumbnail_url: Type.Union([Type.String(), Type.Null()]),
+
     category_id: Type.Number(),
     category: Type.Ref(categoriesSchema),
 
@@ -46,6 +48,10 @@ export const invitationsResolver = resolve({
   }),
   package: virtual(async (invitation, context) => {
     return context.app.service('packages').get(invitation.package_id);
+  }),
+  metadata: virtual(async (invitation, context) => {
+    if (!invitation.metadata_id) return;
+    return context.app.service('metadata').get(invitation.metadata_id);
   })
 });
 
@@ -116,7 +122,7 @@ export const invitationsQueryResolver = resolve({
 
 export const invitationsRemoveResolver = async (context, next) => {
   const invitation = await context.service.get(context.id);
-  await context.app.service('metadata').remove(invitation.metadata_id);
+  if (invitation.metadata_id) await context.app.service('metadata').remove(invitation.metadata_id);
 
   await next();
 };

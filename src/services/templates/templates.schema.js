@@ -12,7 +12,7 @@ export const templatesSchema = Type.Object(
     id: Type.Number(),
     name: Type.String(),
     content: Type.String(),
-    thumbnail_url: Type.String(),
+    thumbnail_url: Type.Union([Type.String(), Type.Null()]),
 
     category_id: Type.Number(),
     category: Type.Ref(categoriesSchema),
