@@ -12,7 +12,7 @@ export async function up(knex) {
     table.string('slug').unique().notNullable();
     table.string('thumbnail_url').nullable();
 
-    table.string('share_message').nullable();
+    table.text('share_message', 'longtext').nullable();
 
     table
       .integer('user_id')

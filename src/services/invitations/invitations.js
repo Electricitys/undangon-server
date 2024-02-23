@@ -42,7 +42,9 @@ export const invitations = (app) => {
       find: [allowAnonymous, authenticate('jwt', 'anonymous')],
       get: [allowAnonymous, authenticate('jwt', 'anonymous')],
       create: [authenticate('jwt')],
-      patch: [authenticate('jwt')],
+      patch: [
+        // authenticate('jwt')
+      ],
       remove: [authenticate('jwt')]
     },
     before: {
