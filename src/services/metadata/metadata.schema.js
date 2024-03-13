@@ -8,8 +8,8 @@ export const metadataSchema = Type.Object(
   {
     id: Type.Number(),
     title: Type.String(),
-    description: Type.Union([Type.String(), Type.Null()]),
-    url: Type.Union([Type.String(), Type.Null()]),
+    description: Type.Optional(Type.Union([Type.String(), Type.Null()])),
+    url: Type.Optional(Type.Union([Type.String(), Type.Null()])),
 
     image: Type.Union([Type.String(), Type.Null()]),
     image_width: Type.Union([Type.String(), Type.Null()]),
@@ -26,13 +26,10 @@ export const metadataResolver = resolve({});
 export const metadataExternalResolver = resolve({});
 
 // Schema for creating new entries
-export const metadataDataSchema = Type.Pick(
-  metadataSchema,
-  ['title', 'description', 'url', 'image', 'image_width', 'image_height'],
-  {
-    $id: 'MetadataData'
-  }
-);
+export const metadataDataSchema = Type.Pick(metadataSchema, ['title'], {
+  $id: 'MetadataData',
+  additionalProperties: true
+});
 export const metadataDataValidator = getValidator(metadataDataSchema, dataValidator);
 export const metadataDataResolver = resolve({});
 
