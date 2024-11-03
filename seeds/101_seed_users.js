@@ -13,7 +13,13 @@ export async function seed(knex) {
   let defaultPassword = await localStrategy.hashPassword('123');
 
   await knex('users').insert([
-    { id: 1, name: 'Administrator', email: 'admin@undangon.space', role: USER_ROLES.ADMIN, password },
+    {
+      id: 1,
+      name: 'Administrator',
+      email: 'admin@undangon.space',
+      role: USER_ROLES.ADMIN,
+      password
+    },
     {
       id: 10,
       name: 'user-1',
