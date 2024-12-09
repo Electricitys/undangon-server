@@ -9,7 +9,9 @@ cmd = 'pnpm i --frozen-lockfile'
 
 [phases.migrate]
 cmd = 'pnpm migrate'
+dependsOn = 'install'
 
 [start]
 # cmd = 'pnpm start'
 cmd = 'node start.cjs'
+dependsOn = 'migrate'
