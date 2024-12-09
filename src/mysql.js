@@ -3,8 +3,6 @@ import knex from 'knex';
 
 export const mysql = (app) => {
   const config = app.get('mysql');
-
-  console.log(config);
   const db = knex(config);
 
   app.set('mysqlClient', db);
