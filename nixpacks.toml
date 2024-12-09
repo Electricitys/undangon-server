@@ -12,6 +12,6 @@ cmd = 'pnpm migrate'
 dependsOn = ['install']
 
 [start]
-# cmd = 'pnpm start'
-cmd = 'node start.cjs'
+cmd = 'pnpm start'
+# cmd = 'node start.cjs'
 dependsOn = ['migrate']
