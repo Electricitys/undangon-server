@@ -7,5 +7,9 @@ nixPkgs = ['nodejs_22', 'pnpm-9_x']
 [phases.install]
 cmd = 'pnpm i --frozen-lockfile'
 
+[phases.migrate]
+cmd = 'pnpm migrate'
+
 [start]
-cmd = 'pnpm start'
+# cmd = 'pnpm start'
+cmd = 'node start.cjs'
