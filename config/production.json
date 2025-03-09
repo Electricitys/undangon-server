@@ -1,6 +1,6 @@
 {
   "mysql": {
-    "client": "mysql",
+    "client": "mysql2",
     "connection": "MYSQL_CONNECTION"
   }
 }
