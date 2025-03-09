@@ -13,19 +13,20 @@ This project uses [Feathers](http://feathersjs.com). An open source framework fo
 
     ```
     cd path/to/undangon-panel
-    npm install
+    corepack enable
+    pnpm install
     ```
 
 3. Start your app
 
     ```
-    npm run migrate # Run migrations to set up the database
-    npm start
+    pnpm run migrate # Run migrations to set up the database
+    pnpm start
     ```
 
 ## Testing
 
-Run `npm test` and all your tests in the `test/` directory will be run.
+Run `pnpm test` and all your tests in the `test/` directory will be run.
 
 ## Scaffolding
 

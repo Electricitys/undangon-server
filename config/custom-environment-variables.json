@@ -6,5 +6,9 @@
   "host": "HOSTNAME",
   "authentication": {
     "secret": "FEATHERS_SECRET"
+  },
+  "mysql": {
+    "client": "mysql2",
+    "connection": "MYSQL_CONNECTION"
   }
 }

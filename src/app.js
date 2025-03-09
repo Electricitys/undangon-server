@@ -1,5 +1,6 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/application.html
 import { feathers } from '@feathersjs/feathers';
+import 'dotenv/config';
 import configuration from '@feathersjs/configuration';
 import { koa, rest, bodyParser, errorHandler, parseAuthentication, cors, serveStatic } from '@feathersjs/koa';
 import socketio from '@feathersjs/socketio';
@@ -12,7 +13,6 @@ import { authentication } from './authentication.js';
 
 import { services } from './services/index.js';
 import { channels } from './channels.js';
-import { feathersTus } from './feathers-tus/index.js';
 
 const app = koa(feathers());
 

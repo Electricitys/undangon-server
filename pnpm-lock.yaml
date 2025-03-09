@@ -50,6 +50,9 @@ importers:
       '@feathersjs/typebox':
         specifier: ^5.0.5
         version: 5.0.29(typescript@5.5.4)
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       feathers-hooks-common:
         specifier: ^8.1.1
         version: 8.2.1(@feathersjs/feathers@5.0.29)
@@ -814,6 +817,10 @@ packages:
   diff@5.2.0:
     resolution: {integrity: sha512-uIFDxqpRZGZ6ThOk84hEfqWoHx2devRFvpTZcTHur85vImfaxUbTW9Ryh4CpCuDnToOP1CEtXKIgytHBPVff5A==}
     engines: {node: '>=0.3.1'}
+
+  dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
 
   ecdsa-sig-formatter@1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
@@ -2674,6 +2681,8 @@ snapshots:
       wrappy: 1.0.2
 
   diff@5.2.0: {}
+
+  dotenv@16.4.5: {}
 
   ecdsa-sig-formatter@1.0.11:
     dependencies:
